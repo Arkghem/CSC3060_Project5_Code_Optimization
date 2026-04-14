@@ -78,7 +78,7 @@ bool bitwise_check(void *stu_ctx, void *ref_ctx, lab_test_func naive_func) {
     auto &ref_args = *static_cast<bitwise_args *>(ref_ctx);
 
     if (stu_args.result.size() != ref_args.result.size()) {
-        debug_log("DEBUG: size mismatch: stu={} ref={}\n",
+        debug_log("\tDEBUG: size mismatch: stu={} ref={}\n",
                   stu_args.result.size(),
                   ref_args.result.size());
         return false;
@@ -95,7 +95,7 @@ bool bitwise_check(void *stu_ctx, void *ref_ctx, lab_test_func naive_func) {
             max_abs_diff = std::abs(r - s);
             worst_i = i;
 
-            debug_log("DEBUG: fail at {}: ref={} stu={} abs_diff={}\n",
+            debug_log("\tDEBUG: fail at {}: ref={} stu={} abs_diff={}\n",
                       i,
                       r,
                       s,
@@ -104,7 +104,7 @@ bool bitwise_check(void *stu_ctx, void *ref_ctx, lab_test_func naive_func) {
         }
     }
 
-    debug_log("DEBUG: bitwise_check passed. max_abs_diff={} at i={}\n",
+    debug_log("\tDEBUG: bitwise_check passed. max_abs_diff={} at i={}\n",
               max_abs_diff,
               worst_i);
     return true;

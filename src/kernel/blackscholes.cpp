@@ -194,7 +194,7 @@ bool BlkSchls_check(void *stu_ctx, void *ref_ctx, lab_test_func naive_func) {
         }
 
         if (!call_ok || !put_ok) {
-            debug_log("DEBUG: fail idx={} | call ref={} stu={} err={} thr={} | put ref={} stu={} err={} thr={}\n",
+            debug_log("\tDEBUG: fail idx={} | call ref={} stu={} err={} thr={} | put ref={} stu={} err={} thr={}\n",
                       i,
                       rc,
                       sc,
@@ -207,7 +207,7 @@ bool BlkSchls_check(void *stu_ctx, void *ref_ctx, lab_test_func naive_func) {
             return false;
         }
     }
-    debug_log("BlkSchls_check passed: n={}, max_rel_err={}, max_abs_err={} at idx={} ({})\n",
+    debug_log("\tBlkSchls_check passed: n={}, max_rel_err={}, max_abs_err={} at idx={} ({})\n",
               n,
               max_rel,
               max_abs,

@@ -68,7 +68,7 @@ bool matmul_check(void* stu_ctx, void* ref_ctx, lab_test_func naive_func) {
     auto& ref_args = *static_cast<matmul_args*>(ref_ctx);
 
     if (stu_args.C.size() != ref_args.C.size()) {
-        debug_log("DEBUG: matmul size mismatch: stu={} ref={}\n",
+        debug_log("\tDEBUG: matmul size mismatch: stu={} ref={}\n",
                   stu_args.C.size(),
                   ref_args.C.size());
         return false;
@@ -93,7 +93,7 @@ bool matmul_check(void* stu_ctx, void* ref_ctx, lab_test_func naive_func) {
         if (rel > eps) {
             const size_t row = (n > 0) ? (i / static_cast<size_t>(n)) : 0;
             const size_t col = (n > 0) ? (i % static_cast<size_t>(n)) : 0;
-            debug_log("DEBUG: matmul fail at index {} (row={}, col={}): ref={} stu={} rel={} eps={}\n",
+            debug_log("\tDEBUG: matmul fail at index {} (row={}, col={}): ref={} stu={} rel={} eps={}\n",
                       i,
                       row,
                       col,
@@ -105,7 +105,7 @@ bool matmul_check(void* stu_ctx, void* ref_ctx, lab_test_func naive_func) {
         }
     }
 
-    debug_log("DEBUG: matmul_check passed. max_rel={} at index {}\n",
+    debug_log("\tDEBUG: matmul_check passed. max_rel={} at index {}\n",
               max_rel,
               worst_idx);
     return true;

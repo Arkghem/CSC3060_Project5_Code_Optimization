@@ -20,7 +20,7 @@ struct CSRMatrix {
     std::vector<float> values;
 };
 
-const std::chrono::nanoseconds BASELINE_SPARSE_SPMM{78000000};
+const std::chrono::nanoseconds BASELINE_SPARSE_SPMM{116000000};
 
 struct sparse_spmm_args {
     std::vector<float> out;

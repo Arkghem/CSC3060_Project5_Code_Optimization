@@ -53,7 +53,7 @@ bool aos_soa_check(void* stu_ctx, void* ref_ctx, lab_test_func naive_func) {
     const double abs_diff = std::abs(s - r);
     const double rel_diff = (std::abs(r) > 1e-12) ? abs_diff / std::abs(r) : abs_diff;
 
-    debug_log("DEBUG: aos_soa stu={} ref={} abs_diff={} rel_diff={}\n",
+    debug_log("\tDEBUG: aos_soa stu={} ref={} abs_diff={} rel_diff={}\n",
               *out_stu,
               *out_ref,
               abs_diff,

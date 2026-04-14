@@ -91,7 +91,7 @@ bool graph_check(void* stu_ctx, void* ref_ctx, lab_test_func naive_func) {
     const double atol = 0.0;
     const double rel = (std::abs(r) > 1e-12) ? err / std::abs(r) : err;
 
-    debug_log("DEBUG: graph stu={} ref={} err={} rel={}\n",
+    debug_log("\tDEBUG: graph stu={} ref={} err={} rel={}\n",
               stu_args.out,
               ref_args.out,
               err,

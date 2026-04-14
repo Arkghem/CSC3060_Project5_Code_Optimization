@@ -61,7 +61,7 @@ int main() {
             const auto elapsed = measure_time([&] { bench.tfunc(bench.args); });
 
             avg_time += elapsed;
-            debug_log("DEBUG: {}-th measurement: {} ns\n",
+            debug_log("\tDEBUG: {}-th measurement: {} ns\n",
                       i,
                       static_cast<std::uint64_t>(elapsed.count()));
         }

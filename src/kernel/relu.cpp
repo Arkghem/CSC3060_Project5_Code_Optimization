@@ -53,7 +53,7 @@ bool relu_check(void *stu_ctx, void *ref_ctx, lab_test_func naive_func) {
     const auto eps = ref_args.epsilon;
 
     if (stu_args.data.size() != ref_args.data.size()) {
-        debug_log("DEBUG: size mismatch: stu={} ref={}\n",
+        debug_log("\tDEBUG: size mismatch: stu={} ref={}\n",
                   stu_args.data.size(),
                   ref_args.data.size());
         return false;
@@ -75,7 +75,7 @@ bool relu_check(void *stu_ctx, void *ref_ctx, lab_test_func naive_func) {
         }
 
         if (err > (atol + eps * std::abs(r))) {
-            debug_log("DEBUG: fail at {}: ref={} stu={} err={} rel={} thr={}\n",
+            debug_log("\tDEBUG: fail at {}: ref={} stu={} err={} rel={} thr={}\n",
                       i,
                       ref_args.data[i],
                       stu_args.data[i],
@@ -86,7 +86,7 @@ bool relu_check(void *stu_ctx, void *ref_ctx, lab_test_func naive_func) {
         }
     }
 
-    debug_log("DEBUG: relu_check passed. max_rel={} at i={}\n",
+    debug_log("\tDEBUG: relu_check passed. max_rel={} at i={}\n",
               max_rel,
               worst_i);
     return true;

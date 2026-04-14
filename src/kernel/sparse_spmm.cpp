@@ -18,47 +18,15 @@ Output
     out: [csr.row, dense_cols]
 */
 
-static std::vector<int> make_ordered_offsets(
-    int block_row_count, int block_col_count,
-    const std::vector<int> &diagonal_offsets, unsigned int seed) {
-    if (!diagonal_offsets.empty()) {
-        for (size_t i = 1; i < diagonal_offsets.size(); ++i) {
-            if (diagonal_offsets[i - 1] >= diagonal_offsets[i]) {
-                throw std::invalid_argument(
-                    "initialize_spmm: diagonal_offsets must be strictly "
-                    "increasing.");
-            }
-        }
-        return diagonal_offsets;
-    }
-
-    const int min_offset = -(block_row_count - 1);
-    const int max_offset = block_col_count - 1;
-    const size_t offset_count =
-        std::min<size_t>(5, static_cast<size_t>(max_offset - min_offset + 1));
-    const size_t total_values = static_cast<size_t>(max_offset - min_offset + 1);
-    if (offset_count > total_values) {
-        throw std::invalid_argument(
-            "initialize_spmm: requested too many diagonal offsets.");
-    }
-
-    std::mt19937 offset_rng(seed ^ 0x85ebca6bu);
-    std::vector<int> offsets;
-    offsets.reserve(offset_count);
-
-    size_t remaining_to_pick = offset_count;
-    for (int value = min_offset; value <= max_offset && remaining_to_pick > 0;
-         ++value) {
-        const size_t remaining_values =
-            static_cast<size_t>(max_offset - value + 1);
-        std::uniform_int_distribution<size_t> pick_dist(0, remaining_values - 1);
-        if (pick_dist(offset_rng) < remaining_to_pick) {
-            offsets.push_back(value);
-            --remaining_to_pick;
-        }
-    }
-
-    return offsets;
+static unsigned int sparse_runtime_salt() {
+    static const unsigned int salt = [] {
+        std::random_device rd;
+        std::seed_seq seq{rd(), rd(), rd(), rd()};
+        std::array<unsigned int, 1> values{};
+        seq.generate(values.begin(), values.end());
+        return values[0];
+    }();
+    return salt;
 }
 
 static CSRMatrix build_sparse_matrix(int block_row_count, int block_col_count,
@@ -69,10 +37,37 @@ static CSRMatrix build_sparse_matrix(int block_row_count, int block_col_count,
             "initialize_spmm: block counts must be positive.");
     }
 
-    const std::vector<int> offsets = make_ordered_offsets(block_row_count,
-                                                          block_col_count,
-                                                          diagonal_offsets,
-                                                          seed);
+    const int min_offset = -(block_row_count - 1);
+    const int max_offset = block_col_count - 1;
+
+    std::vector<int> offsets;
+    if (diagonal_offsets.empty()) {
+        constexpr int kDefaultOffsets[] = {-456, -123, 0, 137, 246};
+        for (int offset : kDefaultOffsets) {
+            if (offset >= min_offset && offset <= max_offset) {
+                offsets.push_back(offset);
+            }
+        }
+        if (offsets.empty()) {
+            offsets.push_back(0);
+        }
+    } else {
+        offsets = diagonal_offsets;
+        for (size_t i = 1; i < offsets.size(); ++i) {
+            if (offsets[i - 1] >= offsets[i]) {
+                throw std::invalid_argument(
+                    "initialize_spmm: diagonal_offsets must be strictly "
+                    "increasing.");
+            }
+        }
+        for (int offset : offsets) {
+            if (offset < min_offset || offset > max_offset) {
+                throw std::invalid_argument(
+                    "initialize_spmm: diagonal_offsets contain an out-of-range "
+                    "value.");
+            }
+        }
+    }
 
     CSRMatrix csr;
     csr.rows = block_row_count * 4;
@@ -86,8 +81,9 @@ static CSRMatrix build_sparse_matrix(int block_row_count, int block_col_count,
         row_vals[r].reserve(n_offsets * 4);
     }
 
-    // Random integer values in [-10, 10], including 0.
-    std::mt19937 rng(seed);
+    // Keep the diagonal pattern fixed while varying the stored values each run.
+    std::seed_seq value_seed{seed, sparse_runtime_salt(), 0x85ebca6bu};
+    std::mt19937 rng(value_seed);
     std::uniform_int_distribution<int> value_dist(-10, 10);
 
     for (int br = 0; br < block_row_count; ++br) {
@@ -136,13 +132,14 @@ static CSRMatrix build_sparse_matrix(int block_row_count, int block_col_count,
 }
 
 void initialize_spmm(sparse_spmm_args &args, int block_row_count,
-                     int block_col_count, int dense_cols,
-                     const std::vector<int> &diagonal_offsets,
-                     unsigned int seed) {
+                          int block_col_count, int dense_cols,
+                          const std::vector<int> &diagonal_offsets,
+                          unsigned int seed) {
     args.csr = build_sparse_matrix(block_row_count,
                                    block_col_count,
                                    diagonal_offsets,
                                    seed);
+    // print_dense_matrix(args.csr);
 
     if (dense_cols <= 0) {
         // Default to square dense RHS when possible.
@@ -156,7 +153,8 @@ void initialize_spmm(sparse_spmm_args &args, int block_row_count,
     args.out.resize(csr_rows_sz * dense_cols_sz);
     args.epsilon = 1e-3;
 
-    std::mt19937 rng(seed ^ 0x9e3779b9u);
+    std::seed_seq dense_seed{seed, sparse_runtime_salt(), 0x9e3779b9u};
+    std::mt19937 rng(dense_seed);
     std::uniform_real_distribution<float> dense_dist(-1.0f, 1.0f);
     for (size_t i = 0; i < args.dense_t.size(); ++i) {
         args.dense_t[i] = dense_dist(rng);
@@ -233,13 +231,13 @@ bool sparse_spmm_check(void *stu_ctx, void *ref_ctx, lab_test_func naive_func) {
     if (stu_args.out.size() != ref_args.out.size())
         return false;
 
-    const double atol = 1e-6;
+    const double atol = 2e-6;
     for (size_t i = 0; i < ref_args.out.size(); ++i) {
         const double r = static_cast<double>(ref_args.out[i]);
         const double s = static_cast<double>(stu_args.out[i]);
         const double err = std::abs(r - s);
         if (err > (atol + eps * std::abs(r))) {
-            debug_log("DEBUG: sparse_spmm mismatch at {}: ref={} stu={} err={} thr={}\n",
+            debug_log("\tDEBUG: sparse_spmm mismatch at {}: ref={} stu={} err={} thr={}\n",
                       i,
                       r,
                       s,

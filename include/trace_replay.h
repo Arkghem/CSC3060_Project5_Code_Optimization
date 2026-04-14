@@ -15,7 +15,7 @@ struct RequestRecord {
     uint32_t padding[24];
 };
 
-const std::chrono::nanoseconds BASELINE_TRACE_REPLAY{160000000};
+const std::chrono::nanoseconds BASELINE_TRACE_REPLAY{3400000};
 
 struct trace_replay_args {
     uint64_t out = 0;

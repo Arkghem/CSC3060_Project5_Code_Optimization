@@ -43,7 +43,7 @@ int main() {
     std::println("\tBitwise: vector length={}", bitwise_size);
 
     matmul_args matmul_args_naive;
-    initialize_matmul(matmul_args_naive, 256, seed);
+    initialize_matmul(matmul_args_naive, 512, seed);
     std::cout << "\tMatMul: n=" << matmul_args_naive.n << '\n';
 
     trace_replay_args trace_args_naive;
@@ -51,15 +51,15 @@ int main() {
     std::cout << "\tTrace Replay: records=" << trace_args_naive.records.size()
               << ", trace_length=" << trace_args_naive.trace.size() << '\n';
 
-    constexpr std::size_t ds_opt_node_count = 1024000;
-    constexpr int ds_opt_avg_degree = 8;
-    ds_opt_args ds_opt_args_naive;
-    initialize_ds_opt(&ds_opt_args_naive,
-                      ds_opt_node_count,
-                      ds_opt_avg_degree,
+    constexpr std::size_t graph_node_count = 1024000;
+    constexpr int graph_avg_degree = 8;
+    graph_args graph_args_naive;
+    initialize_graph(&graph_args_naive,
+                      graph_node_count,
+                      graph_avg_degree,
                       seed);
-    std::cout << "\tGraph: node_count=" << ds_opt_node_count
-              << ", avg_degree=" << ds_opt_avg_degree << '\n';
+    std::cout << "\tGraph: node_count=" << graph_node_count
+              << ", avg_degree=" << graph_avg_degree << '\n';
 
     std::vector<bench_t> benchmarks = {{"Black-Scholes (Naive)",
                                         naive_BlkSchls_wrapper,
@@ -104,12 +104,12 @@ int main() {
                                         &trace_args_naive,
                                         BASELINE_TRACE_REPLAY},
                                        {"Graph (Naive)",
-                                        naive_ds_opt_wrapper,
-                                        naive_ds_opt_wrapper,
-                                        ds_opt_check,
-                                        &ds_opt_args_naive,
-                                        &ds_opt_args_naive,
-                                        BASELINE_DS_OPT}};
+                                        naive_graph_wrapper,
+                                        naive_graph_wrapper,
+                                        graph_check,
+                                        &graph_args_naive,
+                                        &graph_args_naive,
+                                        BASELINE_GRAPH}};
 
     std::cout << "\nRunning Benchmarks...\n";
     std::cout << "--------------------------------------------------------\n";
@@ -132,7 +132,7 @@ int main() {
             flush_cache();
             const auto elapsed = measure_time([&] { bench.tfunc(bench.args); });
             avg_time += elapsed;
-            debug_log("DEBUG: {}-th measurement: {} ns\n",
+            debug_log("\tDEBUG: {}-th measurement: {} ns\n",
                       i,
                       static_cast<std::uint64_t>(elapsed.count()));
         }

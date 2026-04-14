@@ -18,7 +18,7 @@ struct matmul_args {
 };
 
 void initialize_matmul(matmul_args& args,
-                       int n = 256,
+                       int n = 512,
                        uint32_t seed = 12345u);
 
 // C = A * B. Matrices are N*N flat vectors.
