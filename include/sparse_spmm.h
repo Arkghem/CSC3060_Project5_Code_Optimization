@@ -1,7 +1,3 @@
-/*
-https://bebop.cs.berkeley.edu/pubs/hoemmen2004-spmv-bench.pdf
-https://bpb-us-e1.wpmucdn.com/sites.gatech.edu/dist/6/4253/files/2024/03/lec15-spmv-c362841419859c96.pdf
-*/
 #ifndef SPARSE_SPMM_H
 #define SPARSE_SPMM_H
 

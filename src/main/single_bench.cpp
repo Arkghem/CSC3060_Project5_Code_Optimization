@@ -6,45 +6,25 @@
 #include <vector>
 
 #include "bench.h"
-#include "graph.h"
+#include "relu.h"
+
 
 int main() {
-    std::cout << "Benchmark setup\n";
+    std::uint32_t seed = 12345u;
+    constexpr size_t relu_size = 1024000;
+    relu_args relu_args_naive;
+    initialize_relu(&relu_args_naive, relu_size, seed);
+    std::println("\tReLU: vector length={}", relu_size);
 
-    constexpr std::size_t graph_node_count = 1024000;
-    constexpr int graph_avg_degree = 8;
-    constexpr std::uint_fast64_t graph_seed = 42;
-
-    graph_args graph_args_ref;
-    graph_args graph_args_stu;
-    initialize_graph(&graph_args_ref,
-                      graph_node_count,
-                      graph_avg_degree,
-                      graph_seed);
-    initialize_graph(&graph_args_stu,
-                      graph_node_count,
-                      graph_avg_degree,
-                      graph_seed);
-
-    std::cout << "\tGraph: node_count=" << graph_node_count
-              << ", avg_degree=" << graph_avg_degree
-              << ", random_seed=" << graph_seed << '\n';
-
-    std::vector<bench_t> benchmarks = {{"Graph (Naive)",
-                                        naive_graph_wrapper,
-                                        naive_graph_wrapper,
-                                        graph_check,
-                                        &graph_args_ref,
-                                        &graph_args_ref,
-                                        BASELINE_GRAPH},
-                                       {"Graph (Stu)",
-                                        stu_graph_wrapper,
-                                        naive_graph_wrapper,
-                                        graph_check,
-                                        &graph_args_stu,
-                                        &graph_args_ref,
-                                        BASELINE_GRAPH}};
-
+    std::vector<bench_t> benchmarks = {
+                {"ReLU (Naive)",
+                 naive_relu_wrapper,
+                 naive_relu_wrapper,
+                 relu_check,
+                 &relu_args_naive,
+                 &relu_args_naive,
+                 BASELINE_RELU},
+    };
     std::cout << "\nRunning Benchmarks...\n";
     std::cout << "--------------------------------------------------------\n";
     std::cout << std::left << std::setw(25) << "Benchmark" << std::setw(12)

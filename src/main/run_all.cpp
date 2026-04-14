@@ -9,6 +9,8 @@
 #include "bitwise.h"
 #include "blackscholes.h"
 #include "graph.h"
+#include "grff.h"
+#include "image_proc.h"
 #include "matmul.h"
 #include "relu.h"
 #include "sparse_spmm.h"
@@ -54,69 +56,96 @@ int main() {
     constexpr std::size_t graph_node_count = 1024000;
     constexpr int graph_avg_degree = 8;
     graph_args graph_args_naive;
-    initialize_graph(&graph_args_naive,
-                      graph_node_count,
-                      graph_avg_degree,
-                      seed);
+    initialize_graph(&graph_args_naive, graph_node_count, graph_avg_degree, seed);
     std::cout << "\tGraph: node_count=" << graph_node_count
               << ", avg_degree=" << graph_avg_degree << '\n';
 
-    std::vector<bench_t> benchmarks = {{"Black-Scholes (Naive)",
-                                        naive_BlkSchls_wrapper,
-                                        naive_BlkSchls_wrapper,
-                                        BlkSchls_check,
-                                        &black_args,
-                                        &black_args,
-                                        BASELINE_BLACKSCHOLES},
-                                       {"Sparse SpMM (Naive)",
-                                        naive_sparse_spmm_wrapper,
-                                        naive_sparse_spmm_wrapper,
-                                        sparse_spmm_check,
-                                        &sparse_args,
-                                        &sparse_args,
-                                        BASELINE_SPARSE_SPMM},
-                                       {"ReLU (Naive)",
-                                        naive_relu_wrapper,
-                                        naive_relu_wrapper,
-                                        relu_check,
-                                        &relu_args_naive,
-                                        &relu_args_naive,
-                                        BASELINE_RELU},
-                                       {"Bitwise (Naive)",
-                                        naive_bitwise_wrapper,
-                                        naive_bitwise_wrapper,
-                                        bitwise_check,
-                                        &bitwise_args_naive,
-                                        &bitwise_args_naive,
-                                        BASELINE_BITWISE},
-                                       {"MatMul (Naive)",
-                                        naive_matmul_wrapper,
-                                        naive_matmul_wrapper,
-                                        matmul_check,
-                                        &matmul_args_naive,
-                                        &matmul_args_naive,
-                                        BASELINE_MATMUL},
-                                       {"Trace Replay (Naive)",
-                                        naive_trace_replay_wrapper,
-                                        naive_trace_replay_wrapper,
-                                        trace_replay_check,
-                                        &trace_args_naive,
-                                        &trace_args_naive,
-                                        BASELINE_TRACE_REPLAY},
-                                       {"Graph (Naive)",
-                                        naive_graph_wrapper,
-                                        naive_graph_wrapper,
-                                        graph_check,
-                                        &graph_args_naive,
-                                        &graph_args_naive,
-                                        BASELINE_GRAPH}};
+    constexpr std::size_t grff_size = 1024000;
+    grff_args grff_args_naive;
+    initialize_grff(&grff_args_naive, grff_size, seed);
+    std::cout << "\tGRFF: feature size=" << grff_args_naive.a_features.size()
+              << '\n';
+
+    constexpr std::size_t image_width = 1024;
+    constexpr std::size_t image_height = 1000;
+    image_proc_args image_args_naive;
+    initialize_image_proc(&image_args_naive, image_width, image_height, seed);
+    std::cout << "\tImage Proc: " << image_args_naive.width << " x "
+              << image_args_naive.height << '\n';
+
+    std::vector<bench_t> benchmarks = {
+        {"Black-Scholes (Naive)",
+         naive_BlkSchls_wrapper,
+         naive_BlkSchls_wrapper,
+         BlkSchls_check,
+         &black_args,
+         &black_args,
+         BASELINE_BLACKSCHOLES},
+        {"Sparse SpMM (Naive)",
+         naive_sparse_spmm_wrapper,
+         naive_sparse_spmm_wrapper,
+         sparse_spmm_check,
+         &sparse_args,
+         &sparse_args,
+         BASELINE_SPARSE_SPMM},
+        {"ReLU (Naive)",
+         naive_relu_wrapper,
+         naive_relu_wrapper,
+         relu_check,
+         &relu_args_naive,
+         &relu_args_naive,
+         BASELINE_RELU},
+        {"Bitwise (Naive)",
+         naive_bitwise_wrapper,
+         naive_bitwise_wrapper,
+         bitwise_check,
+         &bitwise_args_naive,
+         &bitwise_args_naive,
+         BASELINE_BITWISE},
+        {"MatMul (Naive)",
+         naive_matmul_wrapper,
+         naive_matmul_wrapper,
+         matmul_check,
+         &matmul_args_naive,
+         &matmul_args_naive,
+         BASELINE_MATMUL},
+        {"Trace Replay (Naive)",
+         naive_trace_replay_wrapper,
+         naive_trace_replay_wrapper,
+         trace_replay_check,
+         &trace_args_naive,
+         &trace_args_naive,
+         BASELINE_TRACE_REPLAY},
+        {"Graph (Naive)",
+         naive_graph_wrapper,
+         naive_graph_wrapper,
+         graph_check,
+         &graph_args_naive,
+         &graph_args_naive,
+         BASELINE_GRAPH},
+        {"GRFF (Naive)",
+         naive_grff_wrapper,
+         naive_grff_wrapper,
+         grff_check,
+         &grff_args_naive,
+         &grff_args_naive,
+         BASELINE_GRFF},
+        {"Image Proc (Naive)",
+         naive_image_proc_wrapper,
+         naive_image_proc_wrapper,
+         image_proc_check,
+         &image_args_naive,
+         &image_args_naive,
+         BASELINE_IMAGE_PROC}};
 
     std::cout << "\nRunning Benchmarks...\n";
-    std::cout << "--------------------------------------------------------\n";
+    std::cout
+        << "-----------------------------------------------------------------------\n";
     std::cout << std::left << std::setw(25) << "Benchmark" << std::setw(12)
               << "Status" << std::right << std::setw(15) << "Nanoseconds"
-              << '\n';
-    std::cout << "--------------------------------------------------------\n";
+              << std::setw(12) << "Speedup" << '\n';
+    std::cout
+        << "-----------------------------------------------------------------------\n";
 
 #if GEOMETRIC_MEAN
     std::vector<std::chrono::nanoseconds> measured_times;
@@ -125,7 +154,7 @@ int main() {
 #endif
 
     constexpr int k_best = 20;
-    for (const auto& bench : benchmarks) {
+    for (const auto &bench : benchmarks) {
         std::chrono::nanoseconds avg_time{0};
 
         for (int i = 0; i < k_best; ++i) {
@@ -144,28 +173,34 @@ int main() {
         std::cout << std::left << std::setw(25) << bench.description;
         if (!correct) {
             std::cout << "\033[1;31mFAILED\033[0m" << std::right
-                      << std::setw(15) << "N/A" << '\n';
+                      << std::setw(15) << "N/A" << std::setw(12) << "N/A"
+                      << '\n';
             std::cout
                 << "  Error: Results do not match naive implementation!\n";
 #if GEOMETRIC_MEAN
             gm_enable = false;
 #endif
-        } else {
-            std::cout << "\033[1;32mPASSED\033[0m" << std::right
-                      << std::setw(15) << avg_time.count() << " ns";
-            if (avg_time.count() > bench.baseline_time.count() * 1.1) {
-                std::cout << " (SLOWER)";
-            }
-            std::cout << '\n';
-#if GEOMETRIC_MEAN
-            measured_times.push_back(avg_time);
-#endif
+            continue;
         }
+
+        const double speedup = calculate_speedup(bench, avg_time);
+        std::cout << "\033[1;32mPASSED\033[0m" << std::right << std::setw(15)
+                  << avg_time.count() << " ns" << std::setw(11) << std::fixed
+                  << std::setprecision(3) << speedup << "x";
+        if (avg_time.count() > bench.baseline_time.count() * 1.1) {
+            std::cout << " (SLOWER)";
+        }
+        std::cout << '\n';
+        std::cout.unsetf(std::ios::floatfield);
+        std::cout << std::setprecision(6);
+
+#if GEOMETRIC_MEAN
+        measured_times.push_back(avg_time);
+#endif
     }
 
 #if GEOMETRIC_MEAN
-    if (gm_enable &&
-        measured_times.size() == benchmarks.size()) {
+    if (gm_enable && measured_times.size() == benchmarks.size()) {
         const double geometric_mean_speedup =
             calculate_geometric_mean_speedup(measured_times, benchmarks);
         std::println("\nGeometric mean speedup: {:.3f}x",

@@ -8,7 +8,7 @@
 #include <span>
 #include <vector>
 
-const std::chrono::nanoseconds BASELINE_RELU{800000};
+const std::chrono::nanoseconds BASELINE_RELU{550000};
 
 struct relu_args {
     std::vector<float> data;

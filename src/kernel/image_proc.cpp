@@ -159,7 +159,7 @@ void naive_image_proc(image_proc_args& args) {
 }
 
 // -------------------------------------------------------------------------
-// Student Implementation
+// TODO: Student Implementation
 // -------------------------------------------------------------------------
 void stu_image_proc(image_proc_args& args) {
 

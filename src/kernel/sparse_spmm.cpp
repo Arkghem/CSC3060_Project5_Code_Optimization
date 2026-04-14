@@ -8,8 +8,8 @@
 #include <stdexcept>
 
 /*
-sparse matrix LHS: csr.row x csr.col
-transposed dense RHS: dense_cols x csr.cols
+Sparse matrix LHS: csr.row x csr.col
+Transposed dense RHS: dense_cols x csr.cols
 
 Input
     csr: [csr.row, csr.col]
@@ -171,6 +171,7 @@ void initialize_spmm(sparse_spmm_args &args, int block_row_count,
         touch = touch + args.csr.values[i];
     (void)touch;
 }
+
 
 void csr_spmm(const CSRMatrix &csr, const std::vector<float> &dense_t,
               std::vector<float> &out) {

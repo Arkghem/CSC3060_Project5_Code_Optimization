@@ -6,7 +6,7 @@
 #include <cstdint>
 #include <vector>
 
-const std::chrono::nanoseconds BASELINE_MATMUL{166295179};
+const std::chrono::nanoseconds BASELINE_MATMUL{88000000};
 
 struct matmul_args {
     std::vector<float> C;

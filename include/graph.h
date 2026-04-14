@@ -7,7 +7,7 @@
 #include <cstdint>
 #include <vector>
 
-const std::chrono::nanoseconds BASELINE_GRAPH{6000000};
+const std::chrono::nanoseconds BASELINE_GRAPH{5000000};
 
 struct Edge {
     int to;

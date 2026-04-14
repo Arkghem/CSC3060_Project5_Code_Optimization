@@ -5,6 +5,30 @@
 #include <limits>
 #include <random>
 
+void initialize_bitwise(bitwise_args *args, const size_t size,
+                                  const std::uint_fast64_t seed) {
+    if (!args) {
+        return;
+    }
+
+    constexpr std::int8_t LOWER_BOUND = std::numeric_limits<std::int8_t>::min();
+    constexpr std::int8_t UPPER_BOUND = std::numeric_limits<std::int8_t>::max();
+
+    std::mt19937_64 gen(seed);
+    std::uniform_int_distribution<int> dist(LOWER_BOUND, UPPER_BOUND);
+
+    args->a.resize(size);
+    args->b.resize(size);
+    args->result.resize(size);
+
+    for (std::size_t i = 0; i < size; ++i) {
+        args->a[i] = static_cast<std::int8_t>(dist(gen));
+        args->b[i] = static_cast<std::int8_t>(dist(gen));
+        args->result[i] = 0;
+    }
+}
+
+
 // The reference implementation of bitwise
 // Student should not change this function
 void naive_bitwise(std::span<std::int8_t> result,
@@ -45,29 +69,6 @@ void stu_bitwise_wrapper(void *ctx) {
     // Call your verion here
     auto &args = *static_cast<bitwise_args *>(ctx);
     stu_bitwise(args.result, args.a, args.b);
-}
-
-void initialize_bitwise(bitwise_args *args, const size_t size,
-                                  const std::uint_fast64_t seed) {
-    if (!args) {
-        return;
-    }
-
-    constexpr std::int8_t LOWER_BOUND = std::numeric_limits<std::int8_t>::min();
-    constexpr std::int8_t UPPER_BOUND = std::numeric_limits<std::int8_t>::max();
-
-    std::mt19937_64 gen(seed);
-    std::uniform_int_distribution<int> dist(LOWER_BOUND, UPPER_BOUND);
-
-    args->a.resize(size);
-    args->b.resize(size);
-    args->result.resize(size);
-
-    for (std::size_t i = 0; i < size; ++i) {
-        args->a[i] = static_cast<std::int8_t>(dist(gen));
-        args->b[i] = static_cast<std::int8_t>(dist(gen));
-        args->result[i] = 0;
-    }
 }
 
 bool bitwise_check(void *stu_ctx, void *ref_ctx, lab_test_func naive_func) {

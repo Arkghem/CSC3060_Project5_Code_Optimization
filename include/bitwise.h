@@ -7,7 +7,7 @@
 #include <span>
 #include <vector>
 
-const std::chrono::nanoseconds BASELINE_BITWISE{400000};
+const std::chrono::nanoseconds BASELINE_BITWISE{250000};
 
 struct bitwise_args {
     std::vector<std::int8_t> a;

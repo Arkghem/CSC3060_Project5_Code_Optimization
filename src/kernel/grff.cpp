@@ -3,13 +3,6 @@
 #include <cmath>
 #include <random>
 
-// -------------------------------------------------------------------------
-// Note:
-// Fast Sigmoid Approximation: 0.5 * (x / (1 + |x|) + 1)
-// Fast Tanh Approximation: x / (1 + |x|)
-// -------------------------------------------------------------------------
-
-
 void initialize_grff(grff_args *args, const size_t size, const std::uint_fast64_t seed) {
     if (!args) return;
 
