@@ -1,0 +1,5 @@
+/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/build/CMakeFiles/kernels.dir
+/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/build/CMakeFiles/single_bench.dir
+/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/build/CMakeFiles/run_all.dir
+/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/build/CMakeFiles/edit_cache.dir
+/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/build/CMakeFiles/rebuild_cache.dir

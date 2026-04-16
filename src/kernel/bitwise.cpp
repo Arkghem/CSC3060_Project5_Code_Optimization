@@ -57,7 +57,19 @@ void naive_bitwise(std::span<std::int8_t> result,
 // TODO: Optimize the bitwise function
 void stu_bitwise(std::span<std::int8_t> result, std::span<const std::int8_t> a,
                  std::span<const std::int8_t> b) {
-    // Implement your version...
+    constexpr std::uint8_t kMaskLo = 0x5Au;
+    constexpr std::uint8_t kMaskHi = 0xC3u;
+
+    const std::size_t n = std::min({result.size(), a.size(), b.size()});
+    for (std::size_t i = 0; i < n; ++i) {
+        const auto ua = static_cast<std::uint8_t>(a[i]);
+        const auto ub = static_cast<std::uint8_t>(b[i]);
+        result[i] = static_cast<std::int8_t>((((ua & kMaskLo) ^ (ub & kMaskLo)) |
+                                              (~ua & ~ub & ~kMaskLo)) ^
+                                             ((((ua ^ kMaskHi) | (ub ^ kMaskHi)) &
+                                               (ua | ~kMaskHi) & (ub | ~kMaskHi)) ^
+                                              (ua ^ ub)));
+    }
 }
 
 void naive_bitwise_wrapper(void *ctx) {
