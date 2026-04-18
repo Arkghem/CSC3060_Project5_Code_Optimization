@@ -1,0 +1,74 @@
+[
+{
+  "directory": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/build",
+  "command": "/usr/bin/c++  -I/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/include -std=c++2b -ffast-math -O2 -Wall -g -fno-omit-frame-pointer -o CMakeFiles/kernels.dir/src/kernel/bitwise.cpp.o -c /Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/kernel/bitwise.cpp",
+  "file": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/kernel/bitwise.cpp",
+  "output": "CMakeFiles/kernels.dir/src/kernel/bitwise.cpp.o"
+},
+{
+  "directory": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/build",
+  "command": "/usr/bin/c++  -I/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/include -std=c++2b -ffast-math -O2 -Wall -g -fno-omit-frame-pointer -o CMakeFiles/kernels.dir/src/kernel/blackscholes.cpp.o -c /Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/kernel/blackscholes.cpp",
+  "file": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/kernel/blackscholes.cpp",
+  "output": "CMakeFiles/kernels.dir/src/kernel/blackscholes.cpp.o"
+},
+{
+  "directory": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/build",
+  "command": "/usr/bin/c++  -I/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/include -std=c++2b -ffast-math -O2 -Wall -g -fno-omit-frame-pointer -o CMakeFiles/kernels.dir/src/kernel/filter_gradient.cpp.o -c /Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/kernel/filter_gradient.cpp",
+  "file": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/kernel/filter_gradient.cpp",
+  "output": "CMakeFiles/kernels.dir/src/kernel/filter_gradient.cpp.o"
+},
+{
+  "directory": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/build",
+  "command": "/usr/bin/c++  -I/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/include -std=c++2b -ffast-math -O2 -Wall -g -fno-omit-frame-pointer -o CMakeFiles/kernels.dir/src/kernel/graph.cpp.o -c /Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/kernel/graph.cpp",
+  "file": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/kernel/graph.cpp",
+  "output": "CMakeFiles/kernels.dir/src/kernel/graph.cpp.o"
+},
+{
+  "directory": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/build",
+  "command": "/usr/bin/c++  -I/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/include -std=c++2b -ffast-math -O2 -Wall -g -fno-omit-frame-pointer -o CMakeFiles/kernels.dir/src/kernel/grff.cpp.o -c /Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/kernel/grff.cpp",
+  "file": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/kernel/grff.cpp",
+  "output": "CMakeFiles/kernels.dir/src/kernel/grff.cpp.o"
+},
+{
+  "directory": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/build",
+  "command": "/usr/bin/c++  -I/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/include -std=c++2b -ffast-math -O2 -Wall -g -fno-omit-frame-pointer -o CMakeFiles/kernels.dir/src/kernel/image_proc.cpp.o -c /Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/kernel/image_proc.cpp",
+  "file": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/kernel/image_proc.cpp",
+  "output": "CMakeFiles/kernels.dir/src/kernel/image_proc.cpp.o"
+},
+{
+  "directory": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/build",
+  "command": "/usr/bin/c++  -I/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/include -std=c++2b -ffast-math -O2 -Wall -g -fno-omit-frame-pointer -o CMakeFiles/kernels.dir/src/kernel/matmul.cpp.o -c /Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/kernel/matmul.cpp",
+  "file": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/kernel/matmul.cpp",
+  "output": "CMakeFiles/kernels.dir/src/kernel/matmul.cpp.o"
+},
+{
+  "directory": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/build",
+  "command": "/usr/bin/c++  -I/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/include -std=c++2b -ffast-math -O2 -Wall -g -fno-omit-frame-pointer -o CMakeFiles/kernels.dir/src/kernel/relu.cpp.o -c /Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/kernel/relu.cpp",
+  "file": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/kernel/relu.cpp",
+  "output": "CMakeFiles/kernels.dir/src/kernel/relu.cpp.o"
+},
+{
+  "directory": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/build",
+  "command": "/usr/bin/c++  -I/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/include -std=c++2b -ffast-math -O2 -Wall -g -fno-omit-frame-pointer -o CMakeFiles/kernels.dir/src/kernel/sparse_spmm.cpp.o -c /Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/kernel/sparse_spmm.cpp",
+  "file": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/kernel/sparse_spmm.cpp",
+  "output": "CMakeFiles/kernels.dir/src/kernel/sparse_spmm.cpp.o"
+},
+{
+  "directory": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/build",
+  "command": "/usr/bin/c++  -I/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/include -std=c++2b -ffast-math -O2 -Wall -g -fno-omit-frame-pointer -o CMakeFiles/kernels.dir/src/kernel/trace_replay.cpp.o -c /Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/kernel/trace_replay.cpp",
+  "file": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/kernel/trace_replay.cpp",
+  "output": "CMakeFiles/kernels.dir/src/kernel/trace_replay.cpp.o"
+},
+{
+  "directory": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/build",
+  "command": "/usr/bin/c++  -I/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/include -std=c++2b -o CMakeFiles/single_bench.dir/src/main/single_bench.cpp.o -c /Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/main/single_bench.cpp",
+  "file": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/main/single_bench.cpp",
+  "output": "CMakeFiles/single_bench.dir/src/main/single_bench.cpp.o"
+},
+{
+  "directory": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/build",
+  "command": "/usr/bin/c++  -I/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/include -std=c++2b -o CMakeFiles/run_all.dir/src/main/run_all.cpp.o -c /Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/main/run_all.cpp",
+  "file": "/Users/cuishiyue/Documents/CLionProjects/CSC3060_Project5_Code_Optimization/src/main/run_all.cpp",
+  "output": "CMakeFiles/run_all.dir/src/main/run_all.cpp.o"
+}
+]

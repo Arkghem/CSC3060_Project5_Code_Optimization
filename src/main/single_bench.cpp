@@ -7,6 +7,7 @@
 
 #include "bench.h"
 #include "relu.h"
+#include "bitwise.h"
 
 
 int main() {
@@ -16,6 +17,13 @@ int main() {
     initialize_relu(&relu_args_naive, relu_size, seed);
     std::println("\tReLU: vector length={}", relu_size);
 
+    constexpr size_t bitwise_size = 1024000;
+    bitwise_args bitwise_args_student;
+    bitwise_args bitwise_args_naive;
+    initialize_bitwise(&bitwise_args_student, bitwise_size, seed);
+    initialize_bitwise(&bitwise_args_naive, bitwise_size, seed);
+    std::println("\tBitwise: vector length={}", bitwise_size);
+
     std::vector<bench_t> benchmarks = {
                 {"ReLU (Naive)",
                  naive_relu_wrapper,
@@ -24,6 +32,13 @@ int main() {
                  &relu_args_naive,
                  &relu_args_naive,
                  BASELINE_RELU},
+                {"Bitwise (Student)",
+                 stu_bitwise_wrapper,
+                 naive_bitwise_wrapper,
+                 bitwise_check,
+                 &bitwise_args_student,
+                 &bitwise_args_naive,
+                 BASELINE_BITWISE},
     };
     std::cout << "\nRunning Benchmarks...\n";
     std::cout << "--------------------------------------------------------\n";
